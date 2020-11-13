@@ -1,0 +1,5 @@
+BB_SOLIST := \
+/home/vqdo/work/humax/bbtechlab/bblogger/liblogger/bbliblogger.o /home/vqdo/work/humax/bbtechlab/bblogger/liblogger/bbliblogger_layout.o /home/vqdo/work/humax/bbtechlab/bblogger/liblogger/bbliblogger_cmd.o\
+\
+\
+\

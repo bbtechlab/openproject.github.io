@@ -1,0 +1,70 @@
+#
+# Copyright (C) 2018 BBTech Lab. http://bbtechlab.com/
+#
+
+# 
+
+obj-y :=
+so-y  :=
+obj-bblogger-y += $(TOP_WORK_DIR)/liblogger/
+obj-y += $(obj-bblogger-y)
+
+V=
+
+#
+# Include 
+#
+inccflag-y := -I$(TOP_WORK_DIR)/liblogger/include/
+inccflag-y += -I$(TOP_WORK_DIR)/libutils/include/
+inccflag-y += -I$(TOP_WORK_DIR)/libos/include/
+
+BB_EXTRA_CFLAG := $(inccflag-y)
+BB_EXTRA_CFLAG += -D_GNU_SOURCE=1 -DDISABLE_FILENAMES=1
+ifeq ($(CONFIG_OS_LINUX),y)
+	BB_EXTRA_CFLAG += -fstack-protector-all
+endif
+# The -fPIC flag stands for “Position Independent Code” generation, a requirement for shared libraries
+BB_EXTRA_CFLAG += -fPIC
+
+# The -r flag inserts the file members into the archive [liball.a].
+# The -c flag creates the archive [liball.a].
+BB_AR_FLAGS := rcv
+
+export BB_AR_FLAGS
+export BB_EXTRA_CFLAG
+
+###################### bblogger for shared library ############################
+TARGETS += bblogger_so
+
+bblogger_so: FORCE
+	$(Q_)echo "Compiling bblogger for Shared Library!!!"
+	$(BB_MAKE) -f $(TOP_MAKE_DIR)/Rule.mak LIB_TYPE=SHARED BB_OBJ='$(obj-bblogger-y)' V=$(V) LIBNAME=bblogger shared-library
+	@if [ ! -d $(TOP_MAKE_DIR)/output/lib ]; then \
+		mkdir -p $(TOP_MAKE_DIR)/output/lib; \
+	fi	
+	
+	$(BB_MV) libbblogger.so $(TOP_MAKE_DIR)/output/lib
+
+bblogger_so-clean:
+	$(BB_MAKE) -f $(TOP_MAKE_DIR)/Rule.mak LIB_TYPE=SHARED BB_OBJ='$(obj-bblogger-y)' V=$(V) clean
+
+bblogger_so-distclean: bblogger-clean
+
+###################### bblogger for static library ############################
+TARGETS += bblogger
+bblogger: FORCE
+	$(Q_)echo "Compiling bblogger for static LibraryL $(obj-y)!!!"
+	$(BB_MAKE) -f $(TOP_MAKE_DIR)/Rule.mak LIB_TYPE=STATIC BB_OBJ='$(obj-y)' V=$(V) LIBNAME=$@ static-library
+	@if [ ! -d $(TOP_MAKE_DIR)/output/lib ]; then \
+		mkdir -p $(TOP_MAKE_DIR)/output/lib; \
+	fi		
+	$(BB_MV) libbblogger.a $(TOP_MAKE_DIR)/output/lib
+
+bblogger-clean:
+	$(BB_MAKE) -f $(TOP_MAKE_DIR)/Rule.mak LIB_TYPE=STATIC BB_OBJ='$(obj-y)' V=$(V) clean
+
+bblogger-distclean: bblogger-clean
+
+FORCE:
+	
+
