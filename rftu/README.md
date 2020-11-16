@@ -74,9 +74,9 @@ Error Handling
 	When server recived UNEXPECTED ACK (ACK has sequence number differs to next sequence of server side). It will retransmit data again with previous sequence number immediately.
 ```
 ### Diagram ###
-![alt text](https://github.com/bbtechlab/openproject.github.io/tree/master/rftu/docs/RFTU_CLIENT_v1.0.jpg)
-![alt text](https://github.com/bbtechlab/openproject.github.io/tree/master/rftu/docs/RFTU_SERVER_v1.0.jpg)
-![alt text](https://github.com/bbtechlab/openproject.github.io/tree/master/rftu/docs/RFTU_FSM_v1.0.jpg)
+![RFTU_CLIENT](https://github.com/bbtechlab/openproject.github.io/tree/master/rftu/docs/RFTU_CLIENT_v1.0.jpg)
+![RFTU_SERVER](https://github.com/bbtechlab/openproject.github.io/tree/master/rftu/docs/RFTU_SERVER_v1.0.jpg)
+![RFTU_FSM](https://github.com/bbtechlab/openproject.github.io/tree/master/rftu/docs/RFTU_FSM_v1.0.jpg)
 
 ## Using RFTU ## 
 ### Clone repository ###
